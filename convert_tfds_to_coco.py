@@ -107,10 +107,20 @@ def convert_split(split_name, output_dir):
         "categories": []
     }
 
-    # Add categories (COCO uses 1-indexed category IDs)
+    # COCO 2017 has 80 categories with non-contiguous IDs
+    # Map from TFDS index (0-79) to original COCO category IDs
+    coco_category_ids = [
+        1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 13, 14, 15, 16, 17, 18, 19, 20,
+        21, 22, 23, 24, 25, 27, 28, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+        41, 42, 43, 44, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58,
+        59, 60, 61, 62, 63, 64, 65, 67, 70, 72, 73, 74, 75, 76, 77, 78, 79,
+        80, 81, 82, 84, 85, 86, 87, 88, 89, 90
+    ]
+
+    # Add categories with correct COCO IDs
     for idx, name in enumerate(category_names):
         coco_dict['categories'].append({
-            "id": idx + 1,  # COCO categories are 1-indexed
+            "id": coco_category_ids[idx],  # Use original COCO category IDs
             "name": name,
             "supercategory": "object"
         })
@@ -165,7 +175,7 @@ def convert_split(split_name, output_dir):
             coco_dict['annotations'].append({
                 "id": ann_id,
                 "image_id": image_id,
-                "category_id": int(label) + 1,  # COCO categories are 1-indexed
+                "category_id": coco_category_ids[int(label)],  # Use original COCO category ID
                 "bbox": coco_bbox,
                 "area": float(area),
                 "iscrowd": int(crowd),
