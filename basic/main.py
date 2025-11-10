@@ -5,12 +5,7 @@ from basic.src.zoo.dfine.dfine_decoder import DFINETransformer
 from basic.src.zoo.dfine.hybrid_encoder import HybridEncoder
 from basic.src.zoo.dfine.dfine import DFINE
 
-def main():
-    n_hidden = 16
-    width = 512
-    height = 1024
-    t_in = torch.randn(1, n_hidden, height, width)
-
+def create_model(n_hidden=16):
     backbone = HGNetv2(
         stem_channels=[n_hidden, 16, 16],
         stage_config={
@@ -77,11 +72,19 @@ def main():
         encoder=encoder,
         decoder=decoder
     )
-    
+    return model
+
+
+def main():
+    n_hidden = 16
+    width = 512
+    height = 1024
+    t_in = torch.randn(1, n_hidden, height, width)
+    model = create_model(n_hidden=n_hidden)
     model.eval()
     with torch.no_grad():
-        t_out = model(t_in)
-        print(t_out)
+        out = model(t_in)
+        print(out.keys())
 
 if __name__ == "__main__":
     main()
