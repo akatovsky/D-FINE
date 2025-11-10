@@ -21,8 +21,6 @@ from src.zoo.dfine.dfine import DFINE
 
 def construct_dfine_medium(
     num_classes=80,
-    pretrained_backbone=False,
-    local_model_dir="weight/hgnetv2/"
 ):
     """
     Construct a D-FINE Medium model.
@@ -43,8 +41,7 @@ def construct_dfine_medium(
         freeze_at=-1,
         freeze_norm=False,
         use_lab=True,
-        pretrained=pretrained_backbone,
-        local_model_dir=local_model_dir
+        pretrained=False
     )
 
     # HybridEncoder configuration for Medium model
@@ -111,7 +108,7 @@ def main():
 
     # Create model (without pretrained weights for quick initialization)
     model = construct_dfine_medium(
-        num_classes=80,
+        num_classes=1,
         pretrained_backbone=False
     )
 
