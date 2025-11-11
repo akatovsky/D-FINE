@@ -19,8 +19,8 @@ from basic.src.zoo.dfine.hybrid_encoder import HybridEncoder
 sys.path.insert(0, str(Path(__file__).parent / "src"))
 
 from basic.src.nn.backbone.hgnetv2 import HGNetv2
-from src.zoo.dfine.dfine_criterion import DFINECriterion
-from src.zoo.dfine.matcher import HungarianMatcher
+from basic.src.zoo.dfine.dfine_criterion import DFINECriterion
+from basic.src.zoo.dfine.matcher import HungarianMatcher
 
 
 
